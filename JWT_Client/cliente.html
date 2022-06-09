@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Validação</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+
+    <script src="jquery-3.5.1.min.js"></script>
+    <script>
+        var user_email = 'test@gmail.com';
+        var user_password = '123';
+
+        function loginApi() {
+            $.ajax({
+                url: "http://localhost/JWT/JWT_APIRest/api/auth/login",
+                method: 'POST',
+                data: { 'email': user_email, 'password': user_password },
+            })
+                .done(function (data) {
+                    localStorage.setItem('user_token_jwt', data.data);
+
+                });
+
+        }
+
+        function getUsers() {
+            $.ajax({
+                url: "http://localhost/JWT/JWT_APIRest/api/users/getall",
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('user_token_jwt')
+                },
+            })
+                .done(function (data) {
+                    console.log(data);
+                });
+        }
+
+    </script>
+</body>
+
+</html>
